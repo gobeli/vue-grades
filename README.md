@@ -1,4 +1,4 @@
-# vue-tv-show
+# vue-grades
 
 > A Vue.js project
 

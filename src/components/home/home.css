@@ -1,0 +1,26 @@
+.search {
+  margin-bottom: 1rem;
+}
+
+.tv-shows {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.tv-shows__show{
+  width: 32%;
+  margin-bottom: 2rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .tv-shows__show {
+    width: 49%;
+  }
+}
+
+@media only screen and (max-width: 448px) {
+  .tv-shows__show {
+    width: 100%;
+  }
+}

@@ -1,0 +1,22 @@
+<div id="app">
+  <b-navbar  v-if="user"  toggleable type="inverse" variant="primary">
+    <b-nav-toggle target="nav_collapse"></b-nav-toggle>
+    <b-link class="navbar-brand" to="/">
+      <span>Grades</span>
+    </b-link>
+    <b-collapse is-nav id="nav_collapse">
+      <b-nav is-nav-bar>
+        <b-nav-item to="/home">Home</b-nav-item>
+      </b-nav>
+      <b-nav is-nav-bar class="ml-auto">
+        <b-nav-item@click="logout">Logout</b-nav-item>
+      </b-nav>
+    </b-collapse>
+  </b-navbar>
+  <b-alert v-for="(error, index) of errors" dismissible variant="danger" :key="index" :show="true" @dismissed="remove(index)">
+    {{error.message}}
+  </b-alert>
+  <div class="container">
+    <router-view></router-view>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="semester">
+  <h1>{{semester.id}}. Semester</h1>
+  <b-table striped hover :items="semester.modules" :fields="fields" @row-clicked="selectModule($event)">
+    <template slot="actions" scope="item">
+      <b-btn variant="warning" size="sm" @click="module = item.item; $root.$emit('show::modal','addSemester')">Edit</b-btn>
+    </template>
+  </b-table>
+  <b-button variant="success" @click="$root.$emit('show::modal','addSemester')">+</b-button>
+
+  <b-modal id="addSemester" title="Edit Module" @ok="submitModule" @shown=" ">
+    <form @submit.stop.prevent="submitModule">
+      <b-form-input class="mb-2" type="text" placeholder="Name" v-model="module.name"></b-form-input>
+      <b-form-input class="mb-2" type="text" placeholder="Time" v-model="module.time"></b-form-input>
+      <b-form-input type="text" placeholder="Room" v-model="module.room"></b-form-input>
+    </form>
+  </b-modal>
+
+  <div class="semester__details mt-4" v-if="selectedModule">
+    <h2>{{selectedModule.name}} - {{average}}</h2>
+    <b-table striped hover :items="selectedModule.marks" :fields="moduleFields">
+    </b-table>
+    <b-button class="mb-2" variant="success" @click="$root.$emit('show::modal','addMark')">+</b-button>
+
+    <b-modal id="addMark" title="Edit Mark" @ok="submitMark" @shown=" ">
+      <form @submit.stop.prevent="subitMark">
+        <b-form-input class="mb-2" type="number" placeholder="Mark" v-model="mark.mark"></b-form-input>
+        <b-form-input type="number" placeholder="Weighting" v-model="mark.weighting"></b-form-input>
+      </form>
+    </b-modal>
+  </div>
+</div>

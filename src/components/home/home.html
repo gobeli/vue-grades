@@ -2,7 +2,7 @@
   <h1>Semesters</h1>
   <b-list-group class="mb-2">
     <b-list-group-item v-for="(semester, i) in semesters" :key="i" :to="'semester/' + semester.id" action
-      class="row justify-content-between">
+      class="justify-content-between">
       {{semester.id}}. Semester
       <span class="fa fa-times" @click.prevent="remove(semester)"></span>
     </b-list-group-item>

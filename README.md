@@ -1,4 +1,5 @@
-# vue-grades
+# vue-grades ![build](https://travis-ci.com/gobeli/vue-grades.svg?token=37qG49zjE3x1pEXmsyh5&branch=master)
+
 
 > A Vue.js project
 

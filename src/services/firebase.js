@@ -23,5 +23,11 @@ export const operations = {
     if (user) {
       return firebase.database().ref(pathFunc(user.uid)).push(data);
     }
+  },
+  remove (fbase, pathFunc) {
+    const user = fbase.auth().currentUser;
+    if (user) {
+      return firebase.database().ref(pathFunc(user.uid)).remove();
+    }
   }
 }

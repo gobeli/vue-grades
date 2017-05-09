@@ -1,4 +1,5 @@
 import template from './semester.html';
+import helper from '../../services/helper';
 
 export default {
   template,
@@ -39,6 +40,9 @@ export default {
       weighting: {
         label: 'Weighting',
         sortable: true
+      },
+      actions: {
+        label: 'Actions'
       }
     }
   }),
@@ -73,30 +77,32 @@ export default {
     }
   },
   methods: {
-    next (array) {
-      const max = Math.max(...array);
-      return !isFinite(max) || isNaN(max) ? 1 : max + 1;
-    },
     selectModule (module) {
       if (module) {
         this.selectedModule = Object.assign({}, module, {marks: module.marks && module.marks.length > 0 ? module.marks.filter(m => !!m) : []});
       }
     },
     submitModule () {
-      const id = this.next(this.semester.modules ? this.semester.modules.map(s => s.id) : []);
+      const id = helper.newId(this.semester.modules ? this.semester.modules.map(s => s.id) : []);
       const module = this.module.id ? this.module : Object.assign({}, this.module, {id});
       this.semesterRef.child('modules/' + module.id).set(module);
       this.clearModule();
+    },
+    deleteModule (module) {
+      this.semesterRef.child('modules/' + module.id).remove();
     },
     clearModule () {
       this.module = { name: '', time: '', room: '' };
     },
     submitMark () {
-      const id = this.next(this.selectedModule.marks ? this.selectedModule.marks.map(m => m.id) : []);
+      const id = helper.newId(this.selectedModule.marks ? this.selectedModule.marks.map(m => m.id) : []);
       let mark = this.mark.id ? this.mark : Object.assign({}, this.mark, {id});
       mark = Object.assign(mark, {mark: parseFloat(mark.mark), weighting: parseFloat(mark.weighting)});
       this.semesterRef.child(`modules/${this.selectedModule.id}/marks/${id}`).set(mark);
       this.clearMark();
+    },
+    deleteMark (mark) {
+      this.semesterRef.child(`modules/${this.selectedModule.id}/marks/${mark.id}`).remove();
     },
     clearMark () {
       this.mark = {mark: '', weighting: ''}

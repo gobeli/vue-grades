@@ -20,7 +20,6 @@ export default {
   },
   methods: {
     remove (index) {
-      console.log(index);
       this.errors.splice(index, 1);
     },
     logout () {

@@ -1,6 +1,5 @@
 import template from './home.html';
-import { operations } from '../../services/firebase';
-import './home.css';
+import helper from '../../services/helper';
 
 export default {
   template,
@@ -14,17 +13,24 @@ export default {
       this.semestersRef = this.$firebase.database().ref(user.uid + '/semesters');
       this.semestersRef.on('value', snapshot => {
         const semesters = snapshot.val();
-        if (semesters) {
+        if (semesters && Array.isArray(semesters)) {
           this.semesters = semesters.filter(s => !!s);
+        } else {
+          const keys = Object.keys(semesters);
+          if (keys && keys.length > 0) {
+            this.semesters = [semesters[keys[0]]];
+          }
         }
       });
     }
   },
   methods: {
     add () {
-      const max = Math.max(...this.semesters.map(s => s.id));
-      const id = !isFinite(max) || isNaN(max) ? 1 : max + 1;
-      operations.set(this.$firebase, userId => `${userId}/semesters/${id}`, { id })
+      const id = helper.newId(this.semesters.map(s => s.id))
+      this.semestersRef.child('/' + id).set({ id });
+    },
+    remove (semester) {
+      this.semestersRef.child('/' + semester.id).remove();
     }
   }
 }

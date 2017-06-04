@@ -5,11 +5,14 @@ export default {
   template,
   name: 'app',
   data: () => ({
-    errors: [],
+    error: {},
     user: null
   }),
   mounted () {
-    this.$bus.$on('error', e => this.errors.push(e));
+    this.$bus.$on('error', e => {
+      this.error = e;
+      this.$refs.snackbar.open();
+    });
     this.$firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.user = user;

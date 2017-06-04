@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Login from '@/components/login/login';
 import Semester from '@/components/semester/semester';
 import Home from '@/components/home/home';
+import Module from '@/components/module/module';
 import { authService } from '../services/user';
 
 Vue.use(Router);
@@ -28,6 +29,13 @@ const router = new Router({
       path: '/semester/:id',
       name: 'Semester',
       component: Semester,
+      meta: {
+        auth: true
+      }
+    }, {
+      path: '/semester/:id/module/:moduleId',
+      name: 'Module',
+      component: Module,
       meta: {
         auth: true
       }

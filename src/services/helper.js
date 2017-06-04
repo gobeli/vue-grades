@@ -3,6 +3,11 @@ function newId (arr) {
   return !isFinite(max) || isNaN(max) ? 1 : max + 1;
 }
 
+function fixArr (arr) {
+  return arr && arr.length > 0 ? arr.filter(x => !!x) : []
+}
+
 export default {
-  newId
+  newId,
+  fixArr
 }

@@ -1,22 +1,17 @@
 <div id="app">
-  <b-navbar  v-if="user"  toggleable type="inverse" variant="primary">
-    <b-nav-toggle target="nav_collapse"></b-nav-toggle>
-    <b-link class="navbar-brand" to="/">
-      <span>Grades</span>
-    </b-link>
-    <b-collapse is-nav id="nav_collapse">
-      <b-nav is-nav-bar>
-        <b-nav-item to="/home">Home</b-nav-item>
-      </b-nav>
-      <b-nav is-nav-bar class="ml-auto">
-        <b-nav-item@click="logout">Logout</b-nav-item>
-      </b-nav>
-    </b-collapse>
-  </b-navbar>
-  <b-alert v-for="(error, index) of errors" dismissible variant="danger" :key="index" :show="true" @dismissed="remove(index)">
-    {{error.message}}
-  </b-alert>
+  <md-toolbar v-if="user" class="md-dense">
+    <h2 class="md-title" style="flex: 1">Grades</h2>
+    <md-button @click.native="logout()">
+      logout
+    </md-button>
+  </md-toolbar>
+
   <div class="container">
     <router-view></router-view>
   </div>
+
+  <md-snackbar md-position="bottom center" ref="snackbar" md-duration="4000">
+    <span>{{error.message}}</span>
+    <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbar.close()">Dismiss</md-button>
+  </md-snackbar>
 </div>

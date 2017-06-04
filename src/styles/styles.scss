@@ -1,0 +1,35 @@
+@media (min-width: 768px) {
+  .container {
+      width: 720px;
+      max-width: 100%;
+  }
+}
+
+@media (min-width: 576px) {
+  .container {
+      width: 540px;
+      max-width: 100%;
+  }
+}
+
+@media (min-width: 576px) {
+  .container {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}
+
+.container {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.login {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,10 +1,5 @@
-<div class="login row justify-content-center align-items-center" style="height: 100vh">
-    <b-button-group>
-      <b-button variant="danger" style="background-color: #DD4B39;" href="" @click="googleSignIn()">
-        <i class="fa fa-google fa-lg"></i>
-      </b-button>
-      <b-button variant="danger" style="background-color: #DD4B39;" href="" @click="googleSignIn()">
-        Sign in with Google
-      </b-button>
-    </b-button-group>
+<div class="login">
+    <md-button @click.native="googleSignIn()" class="md-raised md-warn">
+      Sign in with Google
+    </md-button>
 </div>

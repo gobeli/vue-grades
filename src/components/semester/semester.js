@@ -6,44 +6,9 @@ export default {
   data: () => ({
     semester: {},
     semesterRef: {},
-    selectedModule: null,
-    module: {
-      name: '',
-      time: '',
-      room: ''
-    },
-    mark: {
+    markForm: {
       mark: '',
       weighting: ''
-    },
-    fields: {
-      name: {
-        label: 'Name',
-        sortable: true
-      },
-      time: {
-        label: 'Time',
-        sortable: true
-      },
-      room: {
-        label: 'Room'
-      },
-      actions: {
-        label: 'Actions'
-      }
-    },
-    moduleFields: {
-      mark: {
-        label: 'Mark',
-        sortable: true
-      },
-      weighting: {
-        label: 'Weighting',
-        sortable: true
-      },
-      actions: {
-        label: 'Actions'
-      }
     }
   }),
   mounted () {
@@ -54,9 +19,10 @@ export default {
       this.semesterRef.on('value', snapshot => {
         const semester = snapshot.val();
         this.semester = semester;
-        this.semester.modules = this.semester.modules
-          ? this.semester.modules.filter(m => !!m)
-          : [];
+        this.semester.modules = helper.fixArr(this.semester.modules);
+        this.semester.modules.forEach(module => {
+          module.marks = helper.fixArr(module.marks)
+        });
         if (this.selectedModule) {
           const selected = this.semester.modules
             ? this.semester.modules.find(m => this.selectedModule.id === m.id)
@@ -66,21 +32,15 @@ export default {
       });
     }
   },
-  computed: {
-    average () {
-      if (this.selectedModule && this.selectedModule.marks && this.selectedModule.marks.length > 0) {
-        const sum = this.selectedModule.marks.map(m => m.mark * m.weighting).reduce((a, b) => a + b);
-        const count = this.selectedModule.marks.map(m => m.weighting).reduce((a, b) => a + b)
+  methods: {
+    getAvg (marks) {
+      if (marks && marks.length) {
+        const sum = marks.map(m => m.mark * m.weighting).reduce((a, b) => a + b);
+        const count = marks.map(m => m.weighting).reduce((a, b) => a + b)
         const average = sum / count;
         return Math.round(average * 100) / 100;
       }
-    }
-  },
-  methods: {
-    selectModule (module) {
-      if (module) {
-        this.selectedModule = Object.assign({}, module, {marks: module.marks && module.marks.length > 0 ? module.marks.filter(m => !!m) : []});
-      }
+      return 'No grades available'
     },
     submitModule () {
       const id = helper.newId(this.semester.modules ? this.semester.modules.map(s => s.id) : []);

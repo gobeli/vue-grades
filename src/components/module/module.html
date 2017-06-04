@@ -1,0 +1,21 @@
+<div id="module">
+  <h2>{{$route.params.id === 0 ? 'Add' : 'Edit'}} Module</h2>
+  <form novalidate @submit.stop.prevent="submit">
+    <md-input-container>
+      <label>Name</label>
+      <md-input v-model="moduleForm.name"></md-input>
+    </md-input-container>
+
+    <md-input-container>
+      <label>Time</label>
+      <md-input v-model="moduleForm.time"></md-input>
+    </md-input-container>
+
+    <md-input-container>
+      <label>Room</label>
+      <md-input v-model="moduleForm.room"></md-input>
+    </md-input-container>
+
+    <md-button class="md-raised md-primary" type="submit">Submit</md-button>
+  </form>
+</div>

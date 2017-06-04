@@ -1,11 +1,16 @@
 <div class="home">
   <h1>Semesters</h1>
-  <b-list-group class="mb-2">
-    <b-list-group-item v-for="(semester, i) in semesters" :key="i" :to="'semester/' + semester.id" action
-      class="justify-content-between">
-      {{semester.id}}. Semester
-      <span class="fa fa-times" @click.prevent="remove(semester)"></span>
-    </b-list-group-item>
-  </b-list-group>
-  <b-button variant="success" @click="add">+</b-button>
+  <md-list>
+    <md-list-item v-for="(semester, i) in semesters" :key="i" :href="'#/semester/' + semester.id">
+      <span>{{semester.id}}. Semester</span>
+
+      <md-button class="md-icon-button md-list-action">
+        <md-icon class="md-primary" @click.prevent.native="remove(semester)">clear</md-icon>
+      </md-button>
+    </md-list-item>
+  </md-list>
+
+  <md-button class="md-raised md-primary md-icon-button" @click.native="add">
+    <md-icon>add</md-icon>
+  </md-button>
 </div>

@@ -1,8 +1,10 @@
 <div class="semester">
   <h1>{{semester.id}}. Semester</h1>
-  <md-button class="md-icon-button md-raised md-primary" style="position: fixed; bottom: 1rem; right: 1rem; z-index:2">
-    <md-icon>add</md-icon>
-  </md-button>
+  <router-link :to="{ path: 'module/0'}" append>
+    <md-button class="md-icon-button md-raised md-primary" style="position: fixed; bottom: 1rem; right: 1rem; z-index:2">
+      <md-icon>add</md-icon>
+    </md-button>
+  </router-link>
   <md-card v-for="(module, index) of semester.modules" :key="index" style="margin-bottom: 1rem;">
     <md-card-header>
       <div class="md-title">{{module.name}}</div>
@@ -11,8 +13,12 @@
 
     <md-card-expand>
       <md-card-actions>
-        <md-button class="md-raised md-primary">Edit</md-button>
-        <md-button class="md-raised md-warn">Delete</md-button>
+        <router-link :to="{ path: 'module/' + module.id}" append>
+          <md-button class="md-raised md-primary">
+            Edit
+          </md-button>
+        </router-link>
+        <md-button @click.native="deleteModule(module)" class="md-raised md-warn">Delete</md-button>
         <span style="flex: 1"></span>
         <md-button class="md-icon-button" md-expand-trigger>
           <md-icon>keyboard_arrow_down</md-icon>
@@ -23,13 +29,16 @@
           <h3>{{getAvg(module.marks)}}</h3>
           <md-list-item v-for="(mark, i) of module.marks" :key="i">
             <span>{{mark.mark}}</span>
-            <md-button class="md-icon-button md-list-action">
-              <md-icon class="md-primary" @click.prevent.native="deleteMark(semester)">clear</md-icon>
+            <md-button class="md-icon-button md-list-action" @click.native="deleteMark(module, mark)">
+              <md-icon class="md-primary" >clear</md-icon>
             </md-button>
           </md-list-item>
-          <md-button class="md-raised md-primary md-icon-button">
-            <md-icon>add</md-icon>
-          </md-button>
+          <router-link :to="{ path: `module/${module.id}/mark`}" append>
+            <md-button class="md-raised md-primary md-icon-button">
+              <md-icon>add</md-icon>
+            </md-button>
+          </router-link>
+
         </md-list>
       </md-card-content>
     </md-card-expand>

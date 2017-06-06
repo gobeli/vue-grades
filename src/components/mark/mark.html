@@ -1,0 +1,16 @@
+<div id="mark">
+  <h2>{{$route.params.id === 0 ? 'Add' : 'Edit'}} Grade</h2>
+  <form novalidate @submit.stop.prevent="submit" v-if="markForm">
+    <md-input-container>
+      <label>Grade</label>
+      <md-input type="number" v-model="markForm.mark"></md-input>
+    </md-input-container>
+
+    <md-input-container>
+      <label>Weighting</label>
+      <md-input type="number" v-model="markForm.weighting"></md-input>
+    </md-input-container>
+
+    <md-button class="md-raised md-primary" type="submit">Submit</md-button>
+  </form>
+</div>

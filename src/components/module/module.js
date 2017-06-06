@@ -6,12 +6,13 @@ export default {
   data: () => ({
     semesterRef: null,
     semester: null,
-    moduleForm: {
+    initialModuleForm: {
       id: 0,
       name: '',
       time: '',
       room: ''
-    }
+    },
+    moduleForm: {}
   }),
   mounted () {
     const semesterId = this.$route.params.id;
@@ -20,8 +21,7 @@ export default {
     this.semesterRef = this.$firebase.database().ref(`${user.uid}/semesters/${semesterId}`);
     this.semesterRef.on('value', snapshot => {
       this.semester = snapshot.val();
-      this.moduleForm = this.semester.modules.find(m => m && m.id === moduleId) || {};
-      console.log(this.moduleForm);
+      this.moduleForm = this.semester.modules.find(m => m && m.id === moduleId) || this.initialModuleForm;
     });
   },
   methods: {
@@ -29,6 +29,7 @@ export default {
       const id = helper.newId(this.semester.modules ? this.semester.modules.map(s => s.id) : []);
       const module = this.moduleForm.id ? this.moduleForm : Object.assign({}, this.moduleForm, {id});
       this.semesterRef.child('modules/' + module.id).set(module);
+      this.$router.go(-1);
     },
     clearModule () {
       this.moduleForm = { name: '', time: '', room: '' };

@@ -42,17 +42,8 @@ export default {
       }
       return 'No grades available'
     },
-    submitModule () {
-      const id = helper.newId(this.semester.modules ? this.semester.modules.map(s => s.id) : []);
-      const module = this.module.id ? this.module : Object.assign({}, this.module, {id});
-      this.semesterRef.child('modules/' + module.id).set(module);
-      this.clearModule();
-    },
     deleteModule (module) {
       this.semesterRef.child('modules/' + module.id).remove();
-    },
-    clearModule () {
-      this.module = { name: '', time: '', room: '' };
     },
     submitMark () {
       const id = helper.newId(this.selectedModule.marks ? this.selectedModule.marks.map(m => m.id) : []);
@@ -61,8 +52,8 @@ export default {
       this.semesterRef.child(`modules/${this.selectedModule.id}/marks/${id}`).set(mark);
       this.clearMark();
     },
-    deleteMark (mark) {
-      this.semesterRef.child(`modules/${this.selectedModule.id}/marks/${mark.id}`).remove();
+    deleteMark (module, mark) {
+      this.semesterRef.child(`modules/${module.id}/marks/${mark.id}`).remove();
     },
     clearMark () {
       this.mark = {mark: '', weighting: ''}

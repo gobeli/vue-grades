@@ -2,6 +2,7 @@ var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
+const workboxPlugin = require('workbox-webpack-plugin')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -70,5 +71,12 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [ /* Call the plugin. */
+    new workboxPlugin({
+      globDirectory: resolve('dist'),
+      staticFileGlobs: ['**/*.{html,js,css}'],
+      swDest: path.join(resolve('dist'), 'sw.js'),
+    }),
+  ]
 }

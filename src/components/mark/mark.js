@@ -12,6 +12,7 @@ export default {
     }
   }),
   created () {
+    this.$bus.$emit('popup', true);
     const semesterId = this.$route.params.id;
     const moduleId = parseInt(this.$route.params.moduleId, 10);
     const user = this.$firebase.auth().currentUser;

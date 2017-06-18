@@ -18,7 +18,7 @@
             Edit
           </md-button>
         </router-link>
-        <md-button @click.native="deleteModule(module)" class="md-raised md-warn">Delete</md-button>
+        <md-button @click.native="tryDelete(module)" class="md-raised md-warn">Delete</md-button>
         <span style="flex: 1"></span>
         <md-button class="md-icon-button" md-expand-trigger>
           <md-icon>keyboard_arrow_down</md-icon>
@@ -30,7 +30,7 @@
           <md-list-item v-for="(mark, i) of module.marks" :key="i">
             <span>{{mark.mark}}</span>
             <md-button class="md-icon-button md-list-action" @click.native="deleteMark(module, mark)">
-              <md-icon class="md-primary" >clear</md-icon>
+              <md-icon class="md-primary">clear</md-icon>
             </md-button>
           </md-list-item>
           <router-link :to="{ path: `module/${module.id}/mark`}" append>
@@ -43,7 +43,19 @@
       </md-card-content>
     </md-card-expand>
   </md-card>
-
+  <md-dialog
+    md-title="Delete"
+    ref="deleteDialog"
+  >
+    <md-dialog-title>Delete</md-dialog-title>
+    <md-dialog-content>
+      Do you really want to delete {{deletingModule.name}}
+    </md-dialog-content>
+    <md-dialog-actions>
+      <md-button class="md-primary" @click.native="$refs['deleteDialog'].close()">Cancel</md-button>
+      <md-button class="md-primary" @click.native="$refs['deleteDialog'].close(); deleteModule()">Ok</md-button>
+    </md-dialog-actions>
+  </md-dialog>
 
 
 

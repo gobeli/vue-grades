@@ -8,6 +8,7 @@ export default {
     semesters: []
   }),
   mounted () {
+    this.$bus.$emit('popup', false);
     const user = this.$firebase.auth().currentUser;
     if (user) {
       this.semestersRef = this.$firebase.database().ref(user.uid + '/semesters');

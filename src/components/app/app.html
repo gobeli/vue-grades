@@ -1,13 +1,18 @@
 <div id="app">
   <md-toolbar v-if="user" class="md-dense">
-    <h2 class="md-title" style="flex: 1">Grades</h2>
+    <h2 class="md-title" style="flex: 1">
+      <router-link style="color: #FFF;" v-if="!popup" :to="{ path: '/' }">Grades</router-link>
+      <md-icon v-if="popup" class="md-primary" style="color: #FFF; cursor: pointer" @click.prevent.native="$router.go(-1)">clear</md-icon>
+    </h2>
     <md-button @click.native="logout()">
       logout
     </md-button>
   </md-toolbar>
 
   <div class="container">
-    <router-view></router-view>
+    <transition name="transitionName">
+      <router-view></router-view>
+    </transition>
   </div>
 
   <md-snackbar md-position="bottom center" ref="snackbar" md-duration="4000">

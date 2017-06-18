@@ -6,12 +6,10 @@ export default {
   data: () => ({
     semester: {},
     semesterRef: {},
-    markForm: {
-      mark: '',
-      weighting: ''
-    }
+    deletingModule: {}
   }),
-  mounted () {
+  created () {
+    this.$bus.$emit('popup', false);
     const id = this.$route.params.id;
     const user = this.$firebase.auth().currentUser;
     if (id && user) {
@@ -43,15 +41,12 @@ export default {
       }
       return 'No grades available'
     },
-    deleteModule (module) {
-      this.semesterRef.child('modules/' + module.id).remove();
+    tryDelete (module) {
+      this.deletingModule = module;
+      this.$refs['deleteDialog'].open();
     },
-    submitMark () {
-      const id = helper.newId(this.selectedModule.marks ? this.selectedModule.marks.map(m => m.id) : []);
-      let mark = this.mark.id ? this.mark : Object.assign({}, this.mark, {id});
-      mark = Object.assign(mark, {mark: parseFloat(mark.mark), weighting: parseFloat(mark.weighting)});
-      this.semesterRef.child(`modules/${this.selectedModule.id}/marks/${id}`).set(mark);
-      this.clearMark();
+    deleteModule () {
+      this.semesterRef.child('modules/' + this.deletingModule.id).remove();
     },
     deleteMark (module, mark) {
       this.semesterRef.child(`modules/${module.id}/marks/${mark.id}`).remove();
